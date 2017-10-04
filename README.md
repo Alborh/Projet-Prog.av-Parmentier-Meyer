@@ -11,3 +11,5 @@ Ce personnage serait personnalisable et évoluerait au
 fil de la partie. Il pourrait être enregistré sur un 
 fichier texte pour pouvoir enregistrer sa progression 
 et reprendre la partie plus tard.
+  La carte de jeu serait aussi générée par un fichier 
+  texte, permettant de créer des niveaux facilement
