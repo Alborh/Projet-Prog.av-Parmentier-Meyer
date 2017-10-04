@@ -1,0 +1,18 @@
+
+Terrain
+
+# = mur
+r = route
+M = mur
+p = porte
+C = coffre
+s = sol
+B = pont_vertical
+b = pont_horizontal
+W = eau
+t = arbre
+
+
+
+
+
