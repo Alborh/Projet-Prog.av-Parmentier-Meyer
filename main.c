@@ -10,7 +10,7 @@ int main()
     FILE *fichier = NULL;
     char chaine[TAILLE_MAX] = " ";
 
-    fichier = fopen("C:\\Users\\MEYER\\Desktop\\L2-informatique\\Projet RPG\\terrain.txt","r");
+    fichier = fopen("Terrain.txt","r");
 
     if(fichier != NULL)
     {
