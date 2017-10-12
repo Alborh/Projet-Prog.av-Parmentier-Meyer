@@ -1,32 +1,32 @@
 ################################
-#                              #
-# MMMMM                        #
-# MsCsM                        #
-# MsssM                        #
-# MsssM                        #
-# MMpMM                        #
-#   r                          #
-#   r                          #
-#   r                          #
-#   rrrrrrrrrrr                #
-#             r                #
-#             r                #
+#gggggggggggggggggggggggggggggg#
+#gMMMMMgggggggggggggggggggggggg#
+#gMsCsMgggggggggggggggggggggggg#
+#gMsssMgggggggggggggggggggggggg#
+#gMsssMgggggggggggggggggggggggg#
+#gMMpMMgggggggggggggggggggggggg#
+#gggrgggggggggggggggggggggggggg#
+#gggrgggggggggggggggggggggggggg#
+#gggrgggggggggggggggggggggggggg#
+#gggrrrrrrrrrrrgggggggggggggggg#
+#gggggggggggggrgggggggggggggggg#
+#gggggggggggggrgggggggggggggggg#
 #wwwwwwwwwwwwwBwwwwwwwwwwwwwwww#
-#        t    r                #
-#       t t t rrrrrrr          #
-#          ttt      r          #
-#           t t t t r          #
-#                   r          #
-#                   r          #
-#                              #
-#                              #
-#                              #
-#                              #
-#                              #
-#                              #
-#                              #
-#                              #
-#                              #
-#                              #
-#                              #
+#ggggggggtggggrgggggggggggggggg#
+#gggggggtgtgtgrrrrrrrgggggggggg#
+#ggggggggggtttggggggrgggggggggg#
+#gggggggggggtgtgtgtgrgggggggggg#
+#gggggggggggggggggggrgggggggggg#
+#gggggggggggggggggggrgggggggggg#
+#gggggggggMMMMMMMgggrgggggggggg#
+#gggggggggMsssssMgggrgggggggggg#
+#gggggggggMsssssMgggrgggggggggg#
+#gggggggggMsCsssprrrrgggggggggg#
+#gggggggggMsssssMgggggggggggggg#
+#gggggggggMsssssMgggggggggggggg#
+#gggggggggMMMMMMMgggggggggggggg#
+#gggggggggggggggggggggggggggggg#
+#gggggggggggggggggggggggggggggg#
+#gggggggggggggggggggggggggggggg#
+#gggggggggggggggggggggggggggggg#
 ################################
