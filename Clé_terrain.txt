@@ -1,7 +1,8 @@
 
 Terrain
 
-# = mur
+# = bord
+g = herbe
 r = route
 M = mur
 p = porte
