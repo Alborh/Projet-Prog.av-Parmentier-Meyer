@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define TAILLE_MAX 1000
+//#define TAILLE_MAX 1000
 
 /*void lisTable(char* table[32][32])
 {
@@ -19,11 +19,13 @@
 int main()
 {
   int i, j =0;
-  char **tableTerrain = (char**)malloc(32*sizeof(char*));
+  /*char **tableTerrain = (char**)malloc(32*sizeof(char*));
   for(i = 0; i>32; i++)
     {
       tableTerrain[i] = (char*)malloc(32*sizeof(char));
     }
+  */
+  char* tableTerrain[32][32];
   FILE *file = NULL;
   //char chaine[TAILLE_MAX] = " ";
   /* file = fopen("Terrain.txt","r");
@@ -44,13 +46,17 @@ int main()
       }*/
   file = fopen("Terrain.txt","r");
   char c;
-  while(c != EOF)
+  while((c != EOF) && (j<32))
     {
       printf("i = %d et j = %d",i,j);
       c = fgetc(file);
-      tableTerrain[i][j] = c;
-      i++;
-      if(i > 32)
+      printf(" c = %d\n",c);
+      if( c != '\n')
+	{
+	  tableTerrain[i][j] = c;
+	  i++;
+	}
+      if (i > 31)
 	{
 	  i = 0;
 	  j++;
@@ -65,7 +71,7 @@ int main()
     {
       while(i<32)
 	{
-	  printf("%s",&tableTerrain[i][j]);
+	  printf("%s",tableTerrain[i][j]);
 	  i++;
 	}
       printf("\n");
