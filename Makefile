@@ -1,5 +1,5 @@
 SRC=main.c
-BIN=test
+BIN=test2
 all:$(BIN)
 
 $(BIN):$(SRC)
