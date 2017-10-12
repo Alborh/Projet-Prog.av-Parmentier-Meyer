@@ -24,38 +24,42 @@ int main()
     {
       tableTerrain[i] = (char*)malloc(32*sizeof(char));
     }
-  FILE *fichier = NULL;
-  char chaine[TAILLE_MAX] = " ";
-  fichier = fopen("Terrain.txt","r");
+  FILE *file = NULL;
+  //char chaine[TAILLE_MAX] = " ";
+  /* file = fopen("Terrain.txt","r");
   
-  if(fichier != NULL)
+  if(file != NULL)
     {
-      while(fgets(chaine, TAILLE_MAX, fichier) != NULL)
+      while(fgets(chaine, TAILLE_MAX, file) != NULL)
         {
 	  printf("%s",chaine);
         }
       
-      fclose(fichier);
+      fclose(file);
       
     }
   else
     {
       printf("Impossible d'ouvrir le fichier Terrain.txt");
-    }
-  fichier = fopen("Terrain.txt","r");
-  while(fgets(chaine, TAILLE_MAX, fichier) != NULL)
+      }*/
+  file = fopen("Terrain.txt","r");
+  char c;
+  while(c != EOF)
     {
-      for (j=0;j<32;j++)
+      printf("i = %d et j = %d",i,j);
+      c = fgetc(file);
+      tableTerrain[i][j] = c;
+      i++;
+      if(i > 32)
 	{
-	  for(i=0;i<32;j++)
-	    {
-	      tableTerrain[i][j] = fgetc(fichier);
-	    }
+	  i = 0;
+	  j++;
 	}
-      fclose(fichier);
+	
     }
+  fclose(file);
   //lisTable(*tableTerrain);
-  i = 0;
+   i = 0;
   j = 0;
   while(j<32)
     {
