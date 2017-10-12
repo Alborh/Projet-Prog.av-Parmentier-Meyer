@@ -1,0 +1,53 @@
+Terrain
+
+# = bord
+a
+A
+b = pont_horizontal
+B = pont_vertical
+c
+C = coffre
+e
+E
+f
+F
+g = herbe
+G
+h
+H
+i
+I
+j
+J
+k
+K
+l
+L
+m
+M = mur
+n
+N
+o
+O
+p
+P = porte
+q
+Q
+r = route
+R
+s = sol
+S
+t = arbre
+T
+u
+U
+v
+V
+w
+W = eau
+x
+X
+y
+Y
+z
+Z
