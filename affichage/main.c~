@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL.h>
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 1024
+#define MAP_SIZE 32
+#define SPRITE_TERRAIN_SIZE 32
+
+int main()
+{
+  SDL_Surface *screen;
+  //lecture du fichier terrain
+  int i, j =0;
+  char **tableTerrain = (char**)malloc(MAP_SIZE*sizeof(char*));
+  for(i = 0; i<MAP_SIZE; i++)
+    {
+      tableTerrain[i] = (char*)malloc(MAP_SIZE*sizeof(char));
+    }  
+  FILE *file = NULL; 
+  file = fopen("Terrain.txt","r");
+  char c='a';
+  i = 0;
+  while((c != EOF) && (j<32))
+    {
+      c = fgetc(file);      
+      if( c != '\n')
+	{
+	  tableTerrain[i][j] = c;
+	  i++;
+	}
+      if (i > 31)
+	{
+	  i = 0;
+	  j++;
+	}      
+    }
+  fclose(file);
+  i = 0;
+  j = 0;
+  while(j<32)
+    {
+      while(i<32)
+	{
+	  printf("%c ",tableTerrain[i][j]);
+	  i++;
+	}
+      printf("\n");
+      i = 0;
+      j++;
+    }
+  //affichage de la fenetre
+  SDL_Init(SDL_INIT_VIDEO);
+  SDL_WM_SetCAption("Projet","Projet");
+  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
+
+  return 0;
+}

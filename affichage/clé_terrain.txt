@@ -1,0 +1,29 @@
+Terrain
+
+A
+B = pont_vertical
+C = coffre
+D
+E
+F
+G = herbe
+H
+I
+J
+K
+L
+M = mur
+N
+O
+P = porte
+Q
+R = route
+S = sol
+T = arbre
+U
+V
+W = eau
+X
+Y
+Z
+# = vide
