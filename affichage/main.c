@@ -85,6 +85,22 @@ int main()
   temp = SDL_LoadBMP("Bridge_V.bmp");
   bridge_v = SDL_DisplayFormat(temp);
   SDL_FreeSurface(temp);
+  SDL_Surface *bridge_h;
+  temp = SDL_LoadBMP("Bridge_H.bmp");
+  bridge_h = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_Surface *wall;
+  temp = SDL_LoadBMP("Mur.bmp");
+  wall = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_Surface *door;
+  temp = SDL_LoadBMP("Porte.bmp");
+  door = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_Surface *mont;
+  temp = SDL_LoadBMP("Montagne.bmp");
+  mont = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
   
   gameover = 0;
 
@@ -147,6 +163,22 @@ int main()
 	      if(tableTerrain[x][y]=='B')
 		{
 		  SDL_BlitSurface(bridge_v, NULL, screen, &position);
+		}
+	      if(tableTerrain[x][y]=='b')
+		{
+		  SDL_BlitSurface(bridge_h, NULL, screen, &position);
+		}
+	      if(tableTerrain[x][y]=='M')
+		{
+		  SDL_BlitSurface(wall, NULL, screen, &position);
+		}
+	      if(tableTerrain[x][y]=='p')
+		{
+		  SDL_BlitSurface(door, NULL, screen, &position);
+		}
+	      if(tableTerrain[x][y]=='m')
+		{
+		  SDL_BlitSurface(mont, NULL, screen, &position);
 		}
 	    }
 	}
