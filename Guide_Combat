@@ -1,0 +1,24 @@
+
+// Ebauche du guide de Combat //
+
+Caractéristiques du Personnage/Ennemi:
+  - Point de vie
+  - Point de mana
+  - Chance
+  - Point d'attaque 
+  - Point d'armure
+  - Point de déplacement (si combat sur carte)
+  
+1er Tour du combat:
+  - Joueur ou ennemi commence ? (aléatoire ?)
+  - 
+  
+Description d'un tour :
+  - (déplacement) 
+  - action ( une seule ou plusieurs ?)
+  - 
+ 
+ 
+Conditions de défaite/victoire :
+  - point de vie à 0
+  - 
