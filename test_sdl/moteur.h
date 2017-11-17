@@ -26,7 +26,7 @@
 #define _ARBRE 0
 
 #define COFFRE 'C'
-#define _COFFRE 0
+#define _COFFRE 1
 
 #define EAU 'W'
 #define _EAU 0

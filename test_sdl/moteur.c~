@@ -181,10 +181,16 @@ void jeu(SDL_Surface* ecran)
     Joueur[BAS] = SDL_LoadBMP("image/Hero.bmp");
     Joueur[GAUCHE] = SDL_LoadBMP("image/Hero.bmp");
     Joueur[DROITE] = SDL_LoadBMP("image/Hero.bmp");
-    SDL_SetColorKey(Joueur[HAUT],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[HAUT]->format,255,0,255));
+    int colorkey;
+    colorkey = SDL_MapRGB(ecran->format, 255, 0, 255);
+    SDL_SetColorKey(Joueur[HAUT], SDL_TRUE, colorkey);
+    SDL_SetColorKey(Joueur[BAS], SDL_TRUE, colorkey);
+    SDL_SetColorKey(Joueur[GAUCHE], SDL_TRUE, colorkey);
+    SDL_SetColorKey(Joueur[DROITE], SDL_TRUE, colorkey);
+    /*  SDL_SetColorKey(Joueur[HAUT],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[HAUT]->format,255,0,255));
     SDL_SetColorKey(Joueur[BAS],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[BAS]->format,255,0,255));
     SDL_SetColorKey(Joueur[GAUCHE],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[GAUCHE]->format,255,0,255));
-    SDL_SetColorKey(Joueur[DROITE],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[DROITE]->format,255,0,255));
+    SDL_SetColorKey(Joueur[DROITE],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[DROITE]->format,255,0,255));*/
 
 
 
@@ -215,6 +221,9 @@ void jeu(SDL_Surface* ecran)
         case SDL_KEYDOWN:
             switch(event.key.keysym.sym)
             {
+	    case SDLK_ESCAPE:
+	      continuer = 0;
+	      break;
             case SDLK_UP:
                 JoueurActuel = Joueur[HAUT];
                 deplacerJoueur(&positionJoueur, HAUT, carte);
@@ -238,6 +247,8 @@ void jeu(SDL_Surface* ecran)
 		{
 		  Interieur(ecran, Joueur, JoueurActuel, Terrain);
 		}
+	      break;
+	    default:
 	      break;
             }
             break;
@@ -342,7 +353,7 @@ void menu(SDL_Surface* ecran)
 
     int continuer =1;
 
-    menuJeu = SDL_LoadBMP("image/game-menu.bmp"); // charger l'image du menu du jeu
+    menuJeu = SDL_LoadBMP("image/Menu.bmp"); // charger l'image du menu du jeu
     Curseur = SDL_LoadBMP("image/Hand.bmp");      // charger l'image du curseur de selection
     SDL_SetColorKey(Curseur, SDL_SRCCOLORKEY, SDL_MapRGB(Curseur->format,0,255,0));
     //mise en transparence du fond vert du curseur

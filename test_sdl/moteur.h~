@@ -1,9 +1,10 @@
 #ifndef MOTEUR_H
 #define MOTEUR_H
 
-#include "constantes.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <SDL/SDL.h>
+#include <string.h>
 #define NB_PIXELS 32
 #define HAUTEUR_FENETRE NB_PIXELS*NB_BLOCKS_HAUTEUR
 #define LARGEUR_FENETRE NB_PIXELS*NB_BLOCKS_LARGEUR
