@@ -154,13 +154,14 @@ void jeu(SDL_Surface* ecran)
     SDL_Surface *Terrain [NB_SPRITES]= {NULL};
     SDL_Rect position, positionJoueur, positionFond;
     SDL_Event event;
+    SDL_Surface* tmp;
 
     int continuer = 1, i = 0, j = 0;
     struct Tile carte[NB_BLOCKS_LARGEUR][NB_BLOCKS_HAUTEUR]={0}; //tableau de données de la carte du niveau
 
 
 
-    // chargement des sprites des différents terrains
+    // chargement des sprites des différents terrains 
     Terrain[MUR]=SDL_LoadBMP("image/Mur.dib.bmp"); //sprite du mur
     Terrain[DALLE]=SDL_LoadBMP("image/Dalle.dib.bmp");
     Terrain[HERBE]=SDL_LoadBMP("image/grass.dib.bmp");
@@ -177,16 +178,23 @@ void jeu(SDL_Surface* ecran)
     Terrain[MONT]=SDL_LoadBMP("image/Montagne.bmp");
     Terrain[GOLEM]=SDL_LoadBMP("image/golem.bmp");
     //chargement des sprites des différentes position du joueur
-    Joueur[HAUT] = SDL_LoadBMP("image/Hero.bmp");
-    Joueur[BAS] = SDL_LoadBMP("image/Hero.bmp");
-    Joueur[GAUCHE] = SDL_LoadBMP("image/Hero.bmp");
-    Joueur[DROITE] = SDL_LoadBMP("image/Hero.bmp");
+    tmp = SDL_LoadBMP("image/Hero_h.bmp");
+    Joueur[HAUT] = SDL_DisplayFormat(tmp);
+    tmp = SDL_LoadBMP("image/Hero.bmp");
+    Joueur[BAS] = SDL_DisplayFormat(tmp);
+    tmp = SDL_LoadBMP("image/Hero_g.bmp");
+    Joueur[GAUCHE] = SDL_DisplayFormat(tmp);
+    tmp = SDL_LoadBMP("image/Hero.bmp");
+    Joueur[DROITE] = SDL_DisplayFormat(tmp);
     int colorkey;
     colorkey = SDL_MapRGB(ecran->format, 255, 0, 255);
-    SDL_SetColorKey(Joueur[HAUT], SDL_TRUE, colorkey);
-    SDL_SetColorKey(Joueur[BAS], SDL_TRUE, colorkey);
-    SDL_SetColorKey(Joueur[GAUCHE], SDL_TRUE, colorkey);
-    SDL_SetColorKey(Joueur[DROITE], SDL_TRUE, colorkey);
+    SDL_SetColorKey(Joueur[HAUT], SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
+    SDL_SetColorKey(Joueur[BAS], SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
+    SDL_SetColorKey(Joueur[GAUCHE], SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
+    SDL_SetColorKey(Joueur[DROITE], SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
+    JoueurActuel = Joueur[HAUT];
+
+    
     /*  SDL_SetColorKey(Joueur[HAUT],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[HAUT]->format,255,0,255));
     SDL_SetColorKey(Joueur[BAS],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[BAS]->format,255,0,255));
     SDL_SetColorKey(Joueur[GAUCHE],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[GAUCHE]->format,255,0,255));
@@ -195,7 +203,7 @@ void jeu(SDL_Surface* ecran)
 
 
     // preset du joueur dans la position initial
-    JoueurActuel = Joueur[BAS];
+    JoueurActuel = Joueur[GAUCHE];
 
     //configuration de la position initial des sprites de map
     positionFond.x = 0;
@@ -212,6 +220,8 @@ void jeu(SDL_Surface* ecran)
     SDL_EnableKeyRepeat(100,100);
     while(continuer)
     {
+    SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
+    SDL_Flip(ecran);
         SDL_WaitEvent(&event);
         switch(event.type)
         {
@@ -376,6 +386,9 @@ void menu(SDL_Surface* ecran)
         case SDL_KEYDOWN:
             switch(event.key.keysym.sym)
             {
+	    case SDLK_ESCAPE:
+	      continuer = 0;
+	      break;
             case SDLK_UP:
                 deplacerCurseurMenu(&positionCurseur,HAUT);
                 break;
