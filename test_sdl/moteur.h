@@ -58,7 +58,8 @@
 #define MONT 'N'
 #define _MONT 0
 
-#define NB_GOB 5
+#define NB_GOB_D 5
+#define NB_GOB_I 7
 
 enum {HAUT, BAS, GAUCHE, DROITE};
 
@@ -86,14 +87,14 @@ void rechercheSpawn(SDL_Rect *pos,  Tile carte[][NB_BLOCKS_HAUTEUR]);
 
 void menu(SDL_Surface* ecran);
 void deplacerCurseurMenu(SDL_Rect* pos, int direction);
-void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActuel, SDL_Surface *Terrain[]);
+void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActuel, SDL_Surface *Terrain[], ennemi_t gobelin[], SDL_Surface *sprite_gob);
 void recherchePorte(SDL_Rect *pos,  Tile carte[][NB_BLOCKS_HAUTEUR]);
 int chargerNiveau( Tile niveau[][NB_BLOCKS_HAUTEUR], char level[50]);
 void choix_perso(SDL_Surface* ecran);
 void deplacerCurseurChoix(SDL_Rect *pos,int direction);
 
 int JetDe(int nb, int fa);
-void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob);
+void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob, int nb);
 
 
 #endif

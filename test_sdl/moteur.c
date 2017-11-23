@@ -219,7 +219,7 @@ void jeu(SDL_Surface* ecran)
         exit(EXIT_FAILURE);
 
     rechercheSpawn(&positionJoueur, carte);
-    create_gob(gobelin, carte, sprite_gob);
+    create_gob(gobelin, carte, sprite_gob, NB_GOB_D);
 
     SDL_EnableKeyRepeat(100,100);
     while(continuer)
@@ -259,7 +259,7 @@ void jeu(SDL_Surface* ecran)
 	      j = positionJoueur.x % NB_PIXELS;
 	      if(carte[j][i].sprite==PORTE)
 		{
-		  Interieur(ecran, Joueur, JoueurActuel, Terrain);
+		  Interieur(ecran, Joueur, JoueurActuel, Terrain, gobelin, sprite_gob);
 		}
 	      break;
 	    default:
@@ -282,7 +282,7 @@ void jeu(SDL_Surface* ecran)
         position.y = positionJoueur.y*NB_PIXELS;
         SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
 	int i;
-	for(i=0; i<NB_GOB; i++)
+	for(i=0; i<NB_GOB_D; i++)
 	  {
 	    SDL_BlitSurface(gobelin[i].sprite_picture, NULL, ecran, &gobelin[i].position);
 	  }
@@ -458,7 +458,7 @@ void deplacerCurseurMenu(SDL_Rect* pos, int direction)
     }
 }
 
-void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActuel, SDL_Surface *Terrain[])
+void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActuel, SDL_Surface *Terrain[], ennemi_t gobelin[], SDL_Surface *sprite_gob)
 {
     int continuer = 1;
     SDL_Rect position, positionJoueur, positionFond;
@@ -473,7 +473,7 @@ void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActu
 
 
     recherchePorte(&positionJoueur, carte);
-
+    create_gob(gobelin, carte, sprite_gob, NB_GOB_I);
     while(continuer)
     {
         SDL_WaitEvent(&event);
@@ -529,7 +529,12 @@ void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActu
         }
         position.x = positionJoueur.x*NB_PIXELS;
         position.y = positionJoueur.y*NB_PIXELS;
-        SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
+	int i;
+	for(i=0; i<NB_GOB_I; i++)
+	  {
+	    SDL_BlitSurface(gobelin[i].sprite_picture, NULL, ecran, &gobelin[i].position);
+	  }
+	SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
 
         SDL_Flip(ecran);
     }
@@ -564,11 +569,11 @@ int jetDe(int nb, int fa)
   return res;
 }
 
-void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob)
+void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob, int nb)
 {
   int i;
   int col, lig;
-  for (i=0; i<NB_GOB; i++)
+  for (i=0; i<nb; i++)
     {
       col = rand()%NB_BLOCKS_LARGEUR;
       lig = rand()%NB_BLOCKS_HAUTEUR;

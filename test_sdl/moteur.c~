@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 #include <string.h>
-
+#include <math.h>
 
 
 void choix_perso(SDL_Surface* ecran)
@@ -72,7 +72,7 @@ void deplacerCurseurChoix(SDL_Rect *pos,int direction)
     }
 }
 
-int chargerNiveau(struct Tile niveau[][NB_BLOCKS_HAUTEUR], char level[50])
+int chargerNiveau(Tile niveau[][NB_BLOCKS_HAUTEUR], char level[50])
 {
   char nom[50] = "niveau/";
     strcat(nom, level);
@@ -155,9 +155,10 @@ void jeu(SDL_Surface* ecran)
     SDL_Rect position, positionJoueur, positionFond;
     SDL_Event event;
     SDL_Surface* tmp;
-
+    ennemi_t gobelin[5];
+    SDL_Surface *sprite_gob;
     int continuer = 1, i = 0, j = 0;
-    struct Tile carte[NB_BLOCKS_LARGEUR][NB_BLOCKS_HAUTEUR]={0}; //tableau de données de la carte du niveau
+    Tile carte[NB_BLOCKS_LARGEUR][NB_BLOCKS_HAUTEUR]={0}; //tableau de données de la carte du niveau
 
 
 
@@ -186,6 +187,8 @@ void jeu(SDL_Surface* ecran)
     Joueur[GAUCHE] = SDL_DisplayFormat(tmp);
     tmp = SDL_LoadBMP("image/Hero.bmp");
     Joueur[DROITE] = SDL_DisplayFormat(tmp);
+    tmp = SDL_LoadBMP("image/Gobelin.bmp");
+    sprite_gob = SDL_DisplayFormat(tmp);
     int colorkey;
     colorkey = SDL_MapRGB(ecran->format, 255, 0, 255);
     SDL_SetColorKey(Joueur[HAUT], SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
@@ -193,6 +196,7 @@ void jeu(SDL_Surface* ecran)
     SDL_SetColorKey(Joueur[GAUCHE], SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
     SDL_SetColorKey(Joueur[DROITE], SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
     JoueurActuel = Joueur[HAUT];
+    SDL_SetColorKey(sprite_gob, SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
 
     
     /*  SDL_SetColorKey(Joueur[HAUT],SDL_SRCCOLORKEY,SDL_MapRGB(Joueur[HAUT]->format,255,0,255));
@@ -215,7 +219,7 @@ void jeu(SDL_Surface* ecran)
         exit(EXIT_FAILURE);
 
     rechercheSpawn(&positionJoueur, carte);
-
+    create_gob(gobelin, carte, sprite_gob);
 
     SDL_EnableKeyRepeat(100,100);
     while(continuer)
@@ -277,6 +281,11 @@ void jeu(SDL_Surface* ecran)
         position.x = positionJoueur.x*NB_PIXELS;
         position.y = positionJoueur.y*NB_PIXELS;
         SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
+	int i;
+	for(i=0; i<NB_GOB; i++)
+	  {
+	    SDL_BlitSurface(gobelin[i].sprite_picture, NULL, ecran, &gobelin[i].position);
+	  }
 
         SDL_Flip(ecran);
     }
@@ -292,7 +301,7 @@ void jeu(SDL_Surface* ecran)
 
 }
 
-void deplacerJoueur(SDL_Rect *pos, int direction, struct Tile carte[][NB_BLOCKS_HAUTEUR])
+void deplacerJoueur(SDL_Rect *pos, int direction,Tile carte[][NB_BLOCKS_HAUTEUR])
 {
     switch (direction)
     {
@@ -339,7 +348,7 @@ void deplacerJoueur(SDL_Rect *pos, int direction, struct Tile carte[][NB_BLOCKS_
     }
 }
 
-void rechercheSpawn(SDL_Rect *pos, struct Tile carte[][NB_BLOCKS_HAUTEUR])
+void rechercheSpawn(SDL_Rect *pos,Tile carte[][NB_BLOCKS_HAUTEUR])
 {
     int i,j;
     for(i = 0; i < NB_BLOCKS_HAUTEUR; i++)
@@ -457,7 +466,7 @@ void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActu
 
     int i=0, j=0;
 
-    struct Tile carte[NB_BLOCKS_LARGEUR][NB_BLOCKS_HAUTEUR]={0};
+    Tile carte[NB_BLOCKS_LARGEUR][NB_BLOCKS_HAUTEUR]={0};
 
     if(!chargerNiveau(carte, "Interieur"))
         exit(EXIT_FAILURE);
@@ -528,7 +537,7 @@ void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActu
 
 }
 
-void recherchePorte(SDL_Rect *pos, struct Tile carte[][NB_BLOCKS_HAUTEUR])
+void recherchePorte(SDL_Rect *pos, Tile carte[][NB_BLOCKS_HAUTEUR])
 {
     int i,j;
     for(i = 0; i < NB_BLOCKS_HAUTEUR; i++)
@@ -544,3 +553,34 @@ void recherchePorte(SDL_Rect *pos, struct Tile carte[][NB_BLOCKS_HAUTEUR])
         }
 }
 
+int jetDe(int nb, int fa)
+{
+  int res = 0;
+  int i;
+  for(i=0; i<nb; i++)
+    {
+      res = res + rand()%fa +1;
+    }
+  return res;
+}
+
+void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob)
+{
+  int i;
+  int col, lig;
+  for (i=0; i<NB_GOB; i++)
+    {
+      col = rand()%NB_BLOCKS_LARGEUR;
+      lig = rand()%NB_BLOCKS_HAUTEUR;
+      while(carte[col][lig].marchable == 0 || carte[col][lig].sprite==PORTE || carte[col][lig].sprite==COFFRE )
+	{
+	  col = rand()%NB_BLOCKS_LARGEUR;
+	  lig = rand()%NB_BLOCKS_HAUTEUR;
+	}
+      gob[i].col = col;
+      gob[i].lig = lig;
+      gob[i].position.x = col*NB_PIXELS;
+      gob[i].position.y = lig*NB_PIXELS;
+      gob[i].sprite_picture = sprite_gob;
+    }
+}
