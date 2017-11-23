@@ -58,27 +58,42 @@
 #define MONT 'N'
 #define _MONT 0
 
+#define NB_GOB 5
 
 enum {HAUT, BAS, GAUCHE, DROITE};
 
-struct Tile
+struct tile
 {
     char sprite;
     int marchable;
 };
 
+typedef struct tile Tile;
 
+struct ennemi
+{
+  int col;
+  int lig;
+  SDL_Rect position;
+  SDL_Surface *sprite_picture;
+};
+
+typedef struct ennemi ennemi_t;
 
 void jeu(SDL_Surface* ecran);
-void deplacerJoueur(SDL_Rect *pos, int direction, struct Tile carte[][NB_BLOCKS_HAUTEUR]);
-void rechercheSpawn(SDL_Rect *pos, struct Tile carte[][NB_BLOCKS_HAUTEUR]);
+void deplacerJoueur(SDL_Rect *pos, int direction,  Tile carte[][NB_BLOCKS_HAUTEUR]);
+void rechercheSpawn(SDL_Rect *pos,  Tile carte[][NB_BLOCKS_HAUTEUR]);
 
 void menu(SDL_Surface* ecran);
 void deplacerCurseurMenu(SDL_Rect* pos, int direction);
 void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActuel, SDL_Surface *Terrain[]);
-void recherchePorte(SDL_Rect *pos, struct Tile carte[][NB_BLOCKS_HAUTEUR]);
-int chargerNiveau(struct Tile niveau[][NB_BLOCKS_HAUTEUR], char level[50]);
+void recherchePorte(SDL_Rect *pos,  Tile carte[][NB_BLOCKS_HAUTEUR]);
+int chargerNiveau( Tile niveau[][NB_BLOCKS_HAUTEUR], char level[50]);
 void choix_perso(SDL_Surface* ecran);
 void deplacerCurseurChoix(SDL_Rect *pos,int direction);
+
+int JetDe(int nb, int fa);
+void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob);
+
 
 #endif
