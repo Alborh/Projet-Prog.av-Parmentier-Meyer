@@ -58,7 +58,17 @@
 #define MONT 'N'
 #define _MONT 0
 
-#define NB_GOB 5
+#define NB_GOB_D 5
+#define NB_GOB_I 7
+#define TYPE_GOB 1
+
+//Statistiques de base du joueur
+#define PV_BASE 30
+#define AC_BASE 15
+#define ATT_BASE 5
+#define DMG_BASE 3
+#define NB_D_BASE 1
+#define NB_F_BASE 6
 
 enum {HAUT, BAS, GAUCHE, DROITE};
 
@@ -74,11 +84,25 @@ struct ennemi
 {
   int col;
   int lig;
+  int type;
   SDL_Rect position;
   SDL_Surface *sprite_picture;
 };
 
 typedef struct ennemi ennemi_t;
+
+typedef struct character
+{
+  int pv_max;
+  int pv_act;
+  int ac;
+  int ac_boost;
+  int att;
+  int dmg;
+  int nb_d;
+  int nb_f;
+} character_t;
+
 
 void jeu(SDL_Surface* ecran);
 void deplacerJoueur(SDL_Rect *pos, int direction,  Tile carte[][NB_BLOCKS_HAUTEUR]);
@@ -86,14 +110,14 @@ void rechercheSpawn(SDL_Rect *pos,  Tile carte[][NB_BLOCKS_HAUTEUR]);
 
 void menu(SDL_Surface* ecran);
 void deplacerCurseurMenu(SDL_Rect* pos, int direction);
-void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActuel, SDL_Surface *Terrain[]);
+void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActuel, SDL_Surface *Terrain[], ennemi_t gobelin[], SDL_Surface *sprite_gob, character_t player);
 void recherchePorte(SDL_Rect *pos,  Tile carte[][NB_BLOCKS_HAUTEUR]);
 int chargerNiveau( Tile niveau[][NB_BLOCKS_HAUTEUR], char level[50]);
 void choix_perso(SDL_Surface* ecran);
 void deplacerCurseurChoix(SDL_Rect *pos,int direction);
 
 int JetDe(int nb, int fa);
-void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob);
+void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sprite_gob, int nb);
 
 
 #endif
