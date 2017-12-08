@@ -70,6 +70,15 @@
 #define NB_D_BASE 1
 #define NB_F_BASE 6
 
+//Stats de base d'un Gobelin
+#define PV_B_GOB 7
+#define AC_B_GOB 13
+#define ATT_B_GOB 3
+#define DMG_B_GOB 1
+#define NB_D_GOB 1
+#define NB_F_GOB 6
+
+
 enum {HAUT, BAS, GAUCHE, DROITE};
 
 struct tile
@@ -122,5 +131,12 @@ void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sp
 int test_collide(ennemi_t enn, SDL_Rect positionJoueur);
 void kill_tab(ennemi_t enn[], int num);
 void kill_tab_param(ennemi_t enn[], int nombre, SDL_Rect positionJoueur);
+void combat_param(SDL_Surface *ecran, character_t joueur, ennemi_t enn[], int nombre, SDL_Rect positionJoueur, int continuer);
+void combat(SDL_Surface *ecran, ennemi_t ennemi, character_t joueur, int win);
+character_t creationEnnemi(int TypeEnnemi);
+void attaqueNormal(character_t joueur, character_t ennemi);
+void attaqueSpe(character_t joueur, character_t ennemi,int delay);
+void defense(character_t joueur);
+void affiche_pv(character_t perso, SDL_Rect pos_barre, SDL_Surface *PV, SDL_Surface *ecran);
 
 #endif

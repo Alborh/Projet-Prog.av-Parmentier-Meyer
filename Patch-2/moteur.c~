@@ -157,7 +157,6 @@ void jeu(SDL_Surface* ecran)
     SDL_Surface* tmp;
     ennemi_t gobelin[5];
     SDL_Surface *sprite_gob;
-    int nb_gob = NB_GOB_D;
     int continuer = 1, i = 0, j = 0;
     Tile carte[NB_BLOCKS_LARGEUR][NB_BLOCKS_HAUTEUR]={0}; //tableau de données de la carte du niveau
     character_t player;
@@ -272,9 +271,7 @@ void jeu(SDL_Surface* ecran)
 		}
 	      break;
 	    case SDLK_SPACE:
-	      printf("nb_gob = %d\n",nb_gob);
-	      nb_gob = kill_tab_param(gobelin, nb_gob, positionJoueur);
-	      printf("nb_gob = %d\n",nb_gob);
+	      kill_tab_param(gobelin, NB_GOB_D, positionJoueur);
 	      break;
 	    default:
 	      break;
@@ -296,9 +293,12 @@ void jeu(SDL_Surface* ecran)
         position.y = positionJoueur.y*NB_PIXELS;
         SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
 	int i;
-	for(i=0; i<nb_gob; i++)
+	for(i=0; i<NB_GOB_D; i++)
 	  {
-	    SDL_BlitSurface(gobelin[i].sprite_picture, NULL, ecran, &gobelin[i].position);
+	    if(gobelin[i].vivant == 1)
+	      { 
+		SDL_BlitSurface(gobelin[i].sprite_picture, NULL, ecran, &gobelin[i].position);
+	      }
 	  }
 
 
@@ -308,14 +308,14 @@ void jeu(SDL_Surface* ecran)
 
     SDL_EnableKeyRepeat(0,0);
 
-    for( i = 0; i < 4; i++)
-        SDL_FreeSurface(Joueur[i]);
+    /*for( i = 0; i < 4; i++)
+      SDL_FreeSurface(Joueur[i]);
 
     for( i = 0; i< NB_SPRITES; i++)
-        SDL_FreeSurface(Terrain[i]);
+       SDL_FreeSurface(Terrain[i]);
     // TTF_CloseFont(font);
     SDL_FreeSurface(JoueurActuel);
-    SDL_FreeSurface(sprite_gob);
+    SDL_FreeSurface(sprite_gob);*/
 
 }
 
@@ -613,6 +613,7 @@ void create_gob(ennemi_t gob[], Tile carte[][NB_BLOCKS_HAUTEUR], SDL_Surface* sp
 	}
       gob[i].col = col;
       gob[i].lig = lig;
+      gob[i].vivant = 1;
       gob[i].position.x = col*NB_PIXELS;
       gob[i].position.y = lig*NB_PIXELS;
       gob[i].sprite_picture = sprite_gob;
@@ -634,23 +635,20 @@ int test_collide(ennemi_t enn, SDL_Rect positionJoueur)
     }
 }
 
-void kill_tab(ennemi_t enn[], int num, int nombre)
+void kill_tab(ennemi_t enn[], int num)
 {
-  ennemi_t temp = enn[num];
-  enn[num] = enn[nombre];
-  enn[nombre] = temp;
+  enn[num].vivant = 0;
 }
 
-int kill_tab_param(ennemi_t enn[], int nombre, SDL_Rect positionJoueur)
+void kill_tab_param(ennemi_t enn[], int nombre, SDL_Rect positionJoueur)
 {
   int i;
   for(i=0; i<nombre; i++)
     {
+      //printf("ennemi nu %d : %d %d\n",i, enn[i].position.x/32, enn[i].position.y/32);
       if(test_collide(enn[i],positionJoueur)==1)
 	{
-	  kill_tab(enn, i, nombre);
-	  nombre --;
+	  kill_tab(enn, i);
 	}
     }
-  return nombre;
 }

@@ -169,12 +169,12 @@ void jeu(SDL_Surface* ecran)
     player.nb_d = NB_D_BASE;
     player.nb_f = NB_F_BASE;
     /* TTF_Font *font = TTF_OpenFont("image/04B_30__.TTF",32);
-    char affichage_pv[25] = "Affichage des pv";
-    SDL_Color color = {255, 255, 255};
-    SDL_Surface *textsurface = TTF_RenderUTF8_Solid(font, affichage_pv, color);
-    sprintf(affichage_pv, "Points de vie : %d", player.pv);
-    SDL_BlitSurface(textsurface, NULL, ecran, NULL);
-    SDL_FreeSurface(textsurface);*/
+       char affichage_pv[25] = "Affichage des pv";
+       SDL_Color color = {255, 255, 255};
+       SDL_Surface *textsurface = TTF_RenderUTF8_Solid(font, affichage_pv, color);
+       sprintf(affichage_pv, "Points de vie : %d", player.pv);
+       SDL_BlitSurface(textsurface, NULL, ecran, NULL);
+       SDL_FreeSurface(textsurface);*/
     // chargement des sprites des différents terrains 
     Terrain[MUR]=SDL_LoadBMP("image/Mur.dib.bmp"); //sprite du mur
     Terrain[DALLE]=SDL_LoadBMP("image/Dalle.dib.bmp");
@@ -224,75 +224,78 @@ void jeu(SDL_Surface* ecran)
     rechercheSpawn(&positionJoueur, carte);
 
     if(!chargerNiveau(carte, "Terrain"))
-        exit(EXIT_FAILURE);
+      exit(EXIT_FAILURE);
 
     rechercheSpawn(&positionJoueur, carte);
     create_gob(gobelin, carte, sprite_gob, NB_GOB_D);
     int u;
     SDL_EnableKeyRepeat(100,100);
     while(continuer)
-    {
-    SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
-    SDL_Flip(ecran);
+      {
+	SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
+	SDL_Flip(ecran);
         SDL_WaitEvent(&event);
         switch(event.type)
-        {
-        case SDL_QUIT:
+	  {
+	  case SDL_QUIT:
             continuer = 0;
             break;
-        case SDL_KEYDOWN:
+	  case SDL_KEYDOWN:
             switch(event.key.keysym.sym)
-            {
-	    case SDLK_ESCAPE:
-	      continuer = 0;
-	      break;
-            case SDLK_UP:
+	      {
+	      case SDLK_ESCAPE:
+		continuer = 0;
+		break;
+	      case SDLK_UP:
                 JoueurActuel = Joueur[HAUT];
                 deplacerJoueur(&positionJoueur, HAUT, carte);
                 break;
-            case SDLK_DOWN:
+	      case SDLK_DOWN:
                 JoueurActuel = Joueur[BAS];
                 deplacerJoueur(&positionJoueur,BAS,carte);
                 break;
-            case SDLK_RIGHT:
+	      case SDLK_RIGHT:
                 JoueurActuel = Joueur[DROITE];
                 deplacerJoueur(&positionJoueur,DROITE,carte);
                 break;
-            case SDLK_LEFT:
+	      case SDLK_LEFT:
                 JoueurActuel = Joueur[GAUCHE];
                 deplacerJoueur(&positionJoueur,GAUCHE,carte);
                 break;
-	    case SDLK_RETURN:
-	      i = positionJoueur.y % NB_PIXELS;
-	      j = positionJoueur.x % NB_PIXELS;
-	      if(carte[j][i].sprite==PORTE)
-		{
-		  Interieur(ecran, Joueur, JoueurActuel, Terrain, gobelin, sprite_gob, player);
-		}
-	      break;
-	    case SDLK_SPACE:
-	      kill_tab_param(gobelin, NB_GOB_D, positionJoueur);
-	      break;
-	    default:
-	      break;
-            }
+	      case SDLK_RETURN:
+		i = positionJoueur.y % NB_PIXELS;
+		j = positionJoueur.x % NB_PIXELS;
+		if(carte[j][i].sprite==PORTE)
+		  {
+		    Interieur(ecran, Joueur, JoueurActuel, Terrain, gobelin, sprite_gob, player);
+		  }
+		break;
+		 case SDLK_SPACE:
+		   
+		   kill_tab_param(gobelin, NB_GOB_D, positionJoueur);
+		   break;
+	      default:
+		break;
+	      }
+	    
             break;
-        }
+	  }
+	
         SDL_FillRect(ecran,NULL,SDL_MapRGB(ecran->format,255,255,255));
-
+	combat_param(ecran, player, gobelin, NB_GOB_D, positionJoueur, continuer);
         for(i = 0; i < NB_BLOCKS_HAUTEUR; i++)
-        {
+	  {
             for(j =0; j < NB_BLOCKS_LARGEUR; j++)
-            {
+	      {
                 positionFond.x = j*NB_PIXELS;
                 positionFond.y = i*NB_PIXELS;
                 SDL_BlitSurface(Terrain[carte[j][i].sprite],NULL, ecran, &positionFond);
-            }
-        }
+	      }
+	  }
         position.x = positionJoueur.x*NB_PIXELS;
         position.y = positionJoueur.y*NB_PIXELS;
         SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
-	int i;
+
 	for(i=0; i<NB_GOB_D; i++)
 	  {
 	    if(gobelin[i].vivant == 1)
@@ -303,7 +306,7 @@ void jeu(SDL_Surface* ecran)
 
 
         SDL_Flip(ecran);
-    }
+      }
 
 
     SDL_EnableKeyRepeat(0,0);
@@ -311,11 +314,11 @@ void jeu(SDL_Surface* ecran)
     /*for( i = 0; i < 4; i++)
       SDL_FreeSurface(Joueur[i]);
 
-    for( i = 0; i< NB_SPRITES; i++)
-       SDL_FreeSurface(Terrain[i]);
-    // TTF_CloseFont(font);
-    SDL_FreeSurface(JoueurActuel);
-    SDL_FreeSurface(sprite_gob);*/
+      for( i = 0; i< NB_SPRITES; i++)
+      SDL_FreeSurface(Terrain[i]);
+      // TTF_CloseFont(font);
+      SDL_FreeSurface(JoueurActuel);
+      SDL_FreeSurface(sprite_gob);*/
 
 }
 
@@ -435,6 +438,7 @@ void menu(SDL_Surface* ecran)
                 }
             }
             break;
+
         }
         SDL_BlitSurface(menuJeu, NULL, ecran, &positionMenu);
         SDL_BlitSurface(Curseur, NULL, ecran, &positionCurseur);
@@ -532,15 +536,7 @@ void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActu
                 }
                 break;
 	    case SDLK_SPACE:
-	      printf("bloup");
-	      /*for(u=0; u<nb_gob; u++)
-		{
-		  printf("%d", test_collide(gobelin[u],positionJoueur));
-		  if(test_collide(gobelin[u],positionJoueur)==1)
-		  {*/
-		      nb_gob -= 1;
-		      //}
-		      //}
+	      kill_tab_param(gobelin, NB_GOB_I, positionJoueur);
 	      break;
             }
             break;
@@ -559,9 +555,12 @@ void Interieur(SDL_Surface *ecran, SDL_Surface *Joueur[],SDL_Surface *JoueurActu
         position.x = positionJoueur.x*NB_PIXELS;
         position.y = positionJoueur.y*NB_PIXELS;
 	int i;
-	for(i=0; i<nb_gob; i++)
+        for(i=0; i<NB_GOB_I; i++)
 	  {
-	    SDL_BlitSurface(gobelin[i].sprite_picture, NULL, ecran, &gobelin[i].position);
+	    if(gobelin[i].vivant == 1)
+	      { 
+		SDL_BlitSurface(gobelin[i].sprite_picture, NULL, ecran, &gobelin[i].position);
+	      }
 	  }
 	SDL_BlitSurface(JoueurActuel, NULL, ecran, &position);
 
@@ -650,5 +649,222 @@ void kill_tab_param(ennemi_t enn[], int nombre, SDL_Rect positionJoueur)
 	{
 	  kill_tab(enn, i);
 	}
+    }
+}
+
+void combat_param(SDL_Surface *ecran, character_t joueur, ennemi_t enn[], int nombre, SDL_Rect positionJoueur, int continuer)
+{
+int i;
+ int win;
+  for(i=0; i<nombre; i++)
+    {
+      if(test_collide(enn[i],positionJoueur)==1)
+	{
+	  combat(ecran, enn[i], joueur, win);
+	  if(win)
+	    {
+	      kill_tab(enn, i);
+	    }
+	}
+    }
+}
+
+void combat(SDL_Surface *ecran, ennemi_t ennemi, character_t joueur, int win)
+{
+  printf("combat\n");
+  // compteur délai utilisation attaque spécial
+  int delay = 0;
+  // caractéristiques du personnage déjà créer dans le jeu
+
+  // création de la structure de l'ennemi en fonction de la créature rencontrée
+  character_t Ennemi;
+  Ennemi = creationEnnemi(ennemi.type); // inserer le nom de la structure de l'ennemi rencontré
+
+  SDL_Surface *FondCombat, *bouton_att, *bouton_deff, *bouton_spe, *barre_vie, *PV, *sprite_joueur, *sprite_ennemi ;
+  SDL_Event event;
+  SDL_Rect positionCombat, pos_b_att, pos_b_deff, pos_b_spe, positionPerso, positionEnnemi, pos_barre_vie_j, pos_barre_vie_e;
+
+  SDL_Surface* tmp;
+  FondCombat = SDL_LoadBMP("image/Fond_combat.bmp");
+  bouton_att = SDL_LoadBMP("image/Bouton_attaque.bmp");
+  bouton_deff = SDL_LoadBMP("image/Bouton_deffendre.bmp");
+  bouton_spe = SDL_LoadBMP("image/Bouton_special.bmp");
+  barre_vie = SDL_LoadBMP("image/Barre_vie.bmp");
+  PV = SDL_LoadBMP("image/PV.bmp");
+  tmp = SDL_LoadBMP("image/Gobelin_battle.bmp");
+  sprite_ennemi = SDL_DisplayFormat(tmp);
+  tmp = SDL_LoadBMP("image/Hero_battle.bmp");
+  sprite_joueur = SDL_DisplayFormat(tmp);
+  int colorkey;
+  colorkey = SDL_MapRGB(ecran->format, 255, 0, 255);
+  SDL_SetColorKey(sprite_joueur, SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
+  SDL_SetColorKey(sprite_ennemi, SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey);
+
+  positionCombat.x = 0;
+  positionCombat.y = 0;
+  pos_barre_vie_j.x = 10;
+  pos_barre_vie_j.y = 10;
+  pos_barre_vie_e.x = LARGEUR_FENETRE - 10 -64;
+  pos_barre_vie_e.y = 10;
+  positionPerso.x = 200;
+  positionPerso.y = 200;
+  positionEnnemi.x = LARGEUR_FENETRE - 200;
+  positionEnnemi.y = 200;
+  pos_b_spe.x = 10;
+  pos_b_spe.y = HAUTEUR_FENETRE - 52;
+  pos_b_deff.x = 10;
+  pos_b_deff.y = HAUTEUR_FENETRE - 94;
+  pos_b_att.x = 10;
+  pos_b_att.y = HAUTEUR_FENETRE - 94 -42;
+  int continuer = 1;
+  int chanceEnnemi;
+  while (continuer)
+    {
+      joueur.ac_boost = joueur.ac;
+      Ennemi.ac_boost = Ennemi.ac;
+      SDL_WaitEvent(&event);
+      switch (event.type)
+        {
+        case SDL_KEYDOWN:
+	  switch (event.key.keysym.sym)
+            {
+            case SDLK_a:
+	      printf("a\n");
+	      attaqueNormal(joueur,Ennemi);
+	      break;
+	    case SDLK_d:
+	      printf("d\n");
+	      defense(joueur);
+	      break;
+	    case SDLK_s:
+	      printf("s\n");
+	      attaqueSpe(joueur,Ennemi,delay);
+	      break;
+            default:
+	      break;
+            }
+	  delay --;
+	  chanceEnnemi = rand()%100;
+	  if (chanceEnnemi < 25)
+	    {
+	      defense(Ennemi);
+	    }
+	  else
+	    {
+	      attaqueNormal(Ennemi, joueur);
+	    }
+        }
+      SDL_FillRect(ecran,NULL,SDL_MapRGB(ecran->format,255,255,255));
+
+      SDL_BlitSurface(FondCombat,NULL,ecran,&positionCombat);
+      SDL_BlitSurface(bouton_att,NULL,ecran,&pos_b_att);
+      SDL_BlitSurface(bouton_deff, NULL, ecran, &pos_b_deff);
+      if(delay<1)
+	{
+	  SDL_BlitSurface(bouton_spe, NULL, ecran, &pos_b_spe);
+	}
+      SDL_BlitSurface(barre_vie, NULL, ecran, &pos_barre_vie_j);
+      SDL_BlitSurface(barre_vie, NULL, ecran, &pos_barre_vie_e);
+      SDL_BlitSurface(sprite_joueur, NULL, ecran, &positionPerso);
+      SDL_BlitSurface(sprite_ennemi, NULL, ecran, &positionEnnemi);
+      affiche_pv(joueur,pos_barre_vie_j, PV, ecran);
+      affiche_pv(Ennemi,pos_barre_vie_e, PV, ecran);
+      SDL_Flip(ecran);
+      if (Ennemi.pv_act < 1)
+	{
+	  win = 1;
+	  continuer = 0;
+	}
+      if (joueur.pv_act < 1)
+	{
+	  win = 0;
+	  continuer = 0;
+	}
+    }
+}
+
+character_t creationEnnemi(int TypeEnnemi)
+{
+    character_t Ennemi;
+
+    switch(TypeEnnemi)
+    {
+    case 1:
+      // Ennemi = {PV_B_GOB,PV_B_GOB,AC_B_GOB,AC_B_GOB,ATT_B_GOB,DMG_B_GOB,NB_D_GOB,NB_F_GOB}; // changer les caractéristiques du gobelin
+      Ennemi.pv_max = PV_B_GOB;
+      Ennemi.pv_act = PV_B_GOB;
+      Ennemi.ac = AC_B_GOB;
+      Ennemi.ac_boost = AC_B_GOB;
+      Ennemi.att = ATT_B_GOB;
+      Ennemi.dmg = DMG_B_GOB;
+      Ennemi.nb_d = NB_D_GOB;
+      Ennemi.nb_f = NB_F_GOB;
+        break;
+    default:
+        break;
+    }
+    return Ennemi;
+}
+
+void attaqueNormal(character_t joueur, character_t ennemi)
+{
+    int chance;
+    chance = jetDe(1,20)+joueur.att;
+    if(chance >= ennemi.ac_boost)
+    {
+        // affichage de la réussite de l'attaque
+        int degats;
+        degats = jetDe(joueur.nb_d,joueur.nb_f)+joueur.dmg;
+        ennemi.pv_act -= degats;
+        // animation de l'attaque
+    }
+    else
+    {
+        //affichage de l'échec
+        //animation de l'échec
+    }
+}
+
+void attaqueSpe(character_t joueur, character_t ennemi,int delay)
+{
+    int chance;
+    chance = jetDe(1,20)+joueur.att;
+    delay = 4;
+    if(chance >= ennemi.ac_boost)
+    {
+        // affichage de la réussite de l'attaque
+        int degats;
+        degats = 2*(jetDe(joueur.nb_d,joueur.nb_f)+joueur.dmg);
+        ennemi.pv_act -= degats;
+        // animation de l'attaque
+    }
+    else
+    {
+        //affichage de l'échec
+        //animation de l'échec
+    }
+}
+
+void defense(character_t joueur)
+{
+    joueur.ac_boost += 5;
+    joueur.pv_act += 10;
+    if(joueur.pv_act > joueur.pv_max)
+    {
+        joueur.pv_act = joueur.pv_max;
+    }
+}
+
+void affiche_pv(character_t perso, SDL_Rect pos_barre, SDL_Surface *PV, SDL_Surface *ecran)
+{
+  int nb_pv;
+  nb_pv = (perso.pv_act/perso.pv_max)*62;
+  int i;
+  SDL_Rect pos;
+  pos.y = pos_barre.y+2;
+  for(i = 0; i<nb_pv; i++)
+    {
+      pos.x = pos_barre.x+2+i;
+      SDL_BlitSurface(PV, NULL, ecran, &pos);
     }
 }
